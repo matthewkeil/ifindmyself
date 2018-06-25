@@ -56,10 +56,11 @@
     "webpack-validator": "^3.0.1"
   },
   "devDependencies": {
+    "@types/fork-ts-checker-webpack-plugin": "^0.4.0",
     "@types/istanbul": "^0.4.30",
     "@types/node": "^10.1.4",
     "@types/webpack": "^4.4.0",
-    "@types/fork-ts-checker-webpack-plugin": "^0.4.0",
-    "@types/webpack-validator": "^2.2.7"
+    "@types/webpack-validator": "^2.2.7",
+    "rimraf": "^2.6.2"
   }
 }
