@@ -1,0 +1,5 @@
+use ifindmyself
+db.dropDatabase()
+use ifindmyself
+db.getUser('ifmApi')
+exit

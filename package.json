@@ -1,0 +1,65 @@
+{
+  "name": "ifindmyself.com",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthewkeil/ifindmyself.git"
+  },
+  "description": "ifindmyself.com",
+  "author": "Matthew Keil",
+  "homepage": "https://ifindmyself.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matthewkeil/typescript-react-redux-blog/issues"
+  },
+  "keywords": [
+    "typescript",
+    "es6",
+    "react",
+    "redux",
+    "redux-observable",
+    "express",
+    "passport",
+    "graphql",
+    "neo4j",
+    "mongodb",
+    "jest",
+    "mocha",
+    "chai",
+    "sinon"
+  ],
+  "scripts": {
+    "clean:neo4j": "rimraf .db/neo4j && mkdir .db/neo4j && mkdir .db/neo4j/logs && mkdir .db/neo4j/data && mkdir .db/neo4j/run",
+    "clean:mongodb": "rimraf .db/mongodb && mkdir .db/mongodb",
+    "postclean:mongodb": "mongod --dbpath=.db/mongodb & npm run ts-node -- config/scripts/mongodb-create-root.ts",
+    "start": "npm run start:db & npm run start:api",
+    "start:api": "cd api && npm run start",
+    "start:client": "cd client && npm run start",
+    "mongodb": "mongod --config config/mongodb/mongod.conf",
+    "mongodb:refresh": "npm run mongo:admin -- < config/scripts/refresh-mongodb",
+    "mongodb:ssl": "mongod --config config/mongodb/mongod.ssl.conf",
+    "mongo:ssl": "mongo --host localhost --ssl --sslCAFile config/ssl/rootCA.crt --sslPEMKeyFile config/mongodb/mongod.pem",
+    "mongo:admin": "mongo --host localhost -u 'admin' -p 'password' --authenticationDatabase 'admin'",
+    "neo4j": "npm run ts:node -- config/scripts/start-neo4j",
+    "git:commit": "npm run ts:node -- config/scripts/git-commit-all",
+    "ts-node": "node_modules/.bin/ts-node --project config/tsconfig.tsnode.json",
+    "preinstall": "rimraf node_modules"
+  },
+  "dependencies": {
+    "fork-ts-checker-webpack-plugin": "^0.4.2",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0",
+    "npm": "^6.1.0",
+    "ts-node": "^6.0.3",
+    "typescript": "^2.8.3",
+    "webpack": "^4.10.2",
+    "webpack-validator": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/istanbul": "^0.4.30",
+    "@types/node": "^10.1.4",
+    "@types/webpack": "^4.4.0",
+    "@types/fork-ts-checker-webpack-plugin": "^0.4.0",
+    "@types/webpack-validator": "^2.2.7"
+  }
+}

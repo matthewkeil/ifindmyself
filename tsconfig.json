@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "./",
+    "target": "es2017",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true
+  },
+  "exclude": [
+    "node_modules",
+    "client/node_modules",
+    "server/node_modules",
+    "no_compile",
+    "client/no_compile",
+    "server/no_compile",
+    ".db",
+    ".build",
+    "server/.build",
+    "client/.build"
+  ]
+}

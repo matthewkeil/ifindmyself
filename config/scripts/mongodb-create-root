@@ -1,0 +1,7 @@
+use admin
+db.createUser({user:'admin',pwd:'password',roles:[{role:'root',db:'admin'}]});
+use ifm
+use ifm-sessions
+db.createUser({user:'ifmApi',pwd:'ifmApi',roles:[{role:'dbOwner',db:'ifm'}, {role:'dbOwner',db:'ifm-sessions'}]});
+use admin
+db.shutdownServer();
