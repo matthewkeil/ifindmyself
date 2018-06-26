@@ -3,14 +3,14 @@
   "version": "0.0.0",
   "description": "client for ifindmyself.com",
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/matthewkeil/ifindmyself.git"
+    "type": "heroku",
+    "url": "git+https://git.heroku.com/ifindmyself.git"
   },
   "bugs": {
     "url": "https://github.com/matthewkeil/ifindmyself/issues"
   },
   "author": "Matthew Keil",
-  "homepage": "https://ifindmyself.com",
+  "homepage": "https://www.ifindmyself.com",
   "license": "MIT",
   "keywords": [
     "typescript",
@@ -32,7 +32,7 @@
     "start": "node config/scripts/start.js",
     "build": "node config/scripts/build.js",
     "test": "node config/scripts/test.js --env=jsdom",
-    "preinstall": "rimraf node_modules"
+    "prod:push": "git push heroku master"
   },
   "dependencies": {
     "@material-ui/core": "^1.0.0",

@@ -3,14 +3,14 @@
   "version": "0.0.0",
   "description": "graphql api for ifindmyself",
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/matthewkeil/ifindmyself.git"
+    "type": "heroku",
+    "url": "git+https://git.heroku.com/ifindmyself-api.git"
   },
   "bugs": {
     "url": "https://github.com/matthewkeil/typescript-react-redux-blog/issues"
   },
   "author": "Matthew Keil",
-  "homepage": "https://ifindmyself.com",
+  "homepage": "https://www.ifindmyself.com",
   "license": "MIT",
   "keywords": [
     "typescript",
@@ -26,9 +26,9 @@
     "sinon"
   ],
   "scripts": {
-    "clean:build": "rimraf .build && mkdir .build",
+    "clean:build": "rimraf build && mkdir build",
     "clean:results": "rimraf test/results && mkdir test/results",
-    "serve": "nodemon .build",
+    "serve": "nodemon build",
     "tsc:dev": "node_modules/typescript/bin/tsc --project config/tsconfig.dev.json",
     "tsc:once": "npm run clean:build && npm run tsc:dev",
     "tsc:watch": "npm run tsc:dev -- -w",
@@ -38,7 +38,7 @@
     "prestart": "npm run mocha:once",
     "start": "npm run tsc:watch & npm run mocha:watch & npm run serve",
     "test": "npm run mocha:once",
-    "preinstall": "rimraf node_modules"
+    "prod:push": "git push heroku master"
   },
   "dependencies": {
     "apollo-server-express": "^1.3.6",

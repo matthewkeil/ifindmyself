@@ -1,11 +1,11 @@
 import * as http from "http";
-import * as http2 from "http2";
+// import * as http2 from "http2";
 import * as express from "express";
 import * as morgan from "morgan";
 import * as cors from "cors";
 import { PORT, HOST, CORS_CONFIG, buildHeaders } from "../../src/util/helpers";
 
-export const httpServer = async () => {
+export default async () => {
   const app = express();
   app.set("port", PORT.API.INSECURE);
   app.get(/.*favicon.ico/, (req, res) => res.end());
