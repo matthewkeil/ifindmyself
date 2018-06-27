@@ -1,0 +1,7 @@
+# !/bin/bash
+
+if [[ "$MONGO_SSL" == true ]]; then
+    npm run mongodb:ssl
+else
+    npm run mongodb
+fi

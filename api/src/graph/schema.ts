@@ -5,15 +5,15 @@ import {
   GraphQLType,
   GraphQLNamedType
 } from "graphql";
-import { GraphModule } from ".";
+import { SourceModule } from ".";
 
 const modules = [
-  import("./Need") as GraphModule,
-  import("./Dimension") as GraphModule
+  import("./Need") as SourceModule,
+  import("./Dimension") as SourceModule
 ];
 
-let query = {} as GraphModule.Query;
-let mutation = {} as GraphModule.Mutation;
+let query = {} as SourceModule.Query;
+let mutation = {} as SourceModule.Mutation;
 
 for (let module of modules) {
   if (module.query) query = { ...query, ...module.query };

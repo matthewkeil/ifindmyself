@@ -4,14 +4,14 @@ import { Db } from "mongodb";
 import { User } from "./User";
 import * as mongoose from "mongoose";
 
-export interface GraphModule {
+export interface SourceModule {
   query?: GraphQLObjectTypeConfig<any, Context>["fields"];
   mutation?: GraphQLObjectTypeConfig<any, Context>["fields"];
 }
 
-export namespace GraphModule {
-  export type Query = GraphModule["query"];
-  export type Mutation = GraphModule["mutation"];
+export namespace SourceModule {
+  export type Query = SourceModule["query"];
+  export type Mutation = SourceModule["mutation"];
 }
 
 /**

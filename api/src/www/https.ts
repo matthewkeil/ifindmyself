@@ -26,7 +26,7 @@ import {
 
 import { schema, Context } from "../graph";
 import { ServerError } from "../util";
-import User from "../graph/User/User";
+import User from "../graph/User/model";
 import { isArray } from "util";
 // import { User } from "../graph/User";
 
