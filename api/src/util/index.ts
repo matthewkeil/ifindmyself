@@ -1,2 +1,2 @@
-export * from "./ServerError";
-export * from "./toPropString";
+export * from "./errors";
+export * from "./toNeoPropString";

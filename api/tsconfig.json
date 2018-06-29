@@ -3,7 +3,6 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "outDir": ".build",
     "moduleResolution": "node",
     "module": "commonjs",
     "lib": ["dom", "esnext"],

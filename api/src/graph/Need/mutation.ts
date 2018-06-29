@@ -20,8 +20,8 @@ const needMutation: GraphQLObjectTypeConfig<Need, Context>["fields"] = {
     resolve: (_, args, {}) => {
       const need = `(need: Need {})`;
       const relationship = ``;
-      // const dimension = `(dimension:Dimension {${(...args.input.dimension)}})`;
 
+      // const dimension = `(dimension:Dimension {${(...args.input.dimension)}})`;
       // return neo.run(`
       //   CREATE ${need} -[:DIMENSIONED]-> ${dimension}
       //   RETURN need, dimension

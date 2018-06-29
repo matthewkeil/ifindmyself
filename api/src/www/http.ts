@@ -3,7 +3,7 @@ import * as http from "http";
 import * as express from "express";
 import * as morgan from "morgan";
 import * as cors from "cors";
-import { PORT, HOST, CORS_CONFIG, buildHeaders } from "../../src/util/helpers";
+import { PORT, HOST, CORS_CONFIG, buildHeaders } from "./helpers";
 
 export default async () => {
   const app = express();

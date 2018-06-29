@@ -1,16 +1,7 @@
-import {
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLObjectTypeConfig,
-  GraphQLType,
-  GraphQLNamedType
-} from "graphql";
+import { GraphQLSchema, GraphQLObjectType } from "graphql";
 import { SourceModule } from ".";
 
-const modules = [
-  import("./Need") as SourceModule,
-  import("./Dimension") as SourceModule
-];
+const modules = [import("./Need"), import("./Dimension")] as SourceModule[];
 
 let query = {} as SourceModule.Query;
 let mutation = {} as SourceModule.Mutation;

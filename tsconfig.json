@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "rootDir": "./",
+    "rootDir": ".",
+    "rootDirs": ["./api/src", "./client/src"],
+    "moduleResolution": "node",
     "target": "es2017",
     "noImplicitReturns": true,
     "noImplicitThis": true,

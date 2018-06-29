@@ -26,9 +26,9 @@
     "sinon"
   ],
   "scripts": {
-    "clean:build": "rimraf build && mkdir build",
+    "clean:build": "rimraf .build && mkdir .build",
     "clean:results": "rimraf test/results && mkdir test/results",
-    "serve": "nodemon build",
+    "serve": "nodemon .build",
     "tsc:dev": "node_modules/typescript/bin/tsc --project config/tsconfig.dev.json",
     "tsc:once": "npm run clean:build && npm run tsc:dev",
     "tsc:watch": "npm run tsc:dev -- -w",

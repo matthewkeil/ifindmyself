@@ -22,7 +22,7 @@ import {
   PROD,
   SECRETS,
   SSL
-} from "../../src/util/helpers";
+} from "./helpers";
 
 import { schema, Context } from "../graph";
 import { ServerError } from "../util";

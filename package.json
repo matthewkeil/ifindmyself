@@ -32,7 +32,6 @@
     "ts-node": "node_modules/.bin/ts-node --project config/tsconfig.tsnode.json",
     "clean:neo4j": "rimraf .db/neo4j && mkdir .db/neo4j && mkdir .db/neo4j/data && mkdir .db/neo4j/run",
     "neo4j": "npm run ts-node -- config/scripts/start-neo4j",
-    "git:commit": "npm run ts:node -- config/scripts/git-commit-all",
     "mongo:admin:ssl": "mongo --host localhost --ssl --sslCAFile config/ssl/rootCA.crt --sslPEMKeyFile config/mongodb/mongod.pem",
     "mongo:admin": "mongo --host localhost -u 'admin' -p 'password' --authenticationDatabase 'admin'",
     "mongodb:refresh": "npm run mongo:admin -- < config/scripts/refresh-mongodb.mongo",

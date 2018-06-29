@@ -1,9 +1,9 @@
-import { GraphModule } from "../";
+import { SourceModule } from "../";
 
 import query from "./query";
 import mutation from "./mutation";
 
-export const NeedModule: GraphModule = {
+export const NeedModule: SourceModule = {
   query,
   mutation
 };

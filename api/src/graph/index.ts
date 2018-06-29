@@ -1,6 +1,6 @@
 import { GraphQLObjectTypeConfig } from "graphql";
 export { default as schema } from "./schema";
-import { Db } from "mongodb";
+// import { Db } from "mongodb";
 import { User } from "./User";
 import * as mongoose from "mongoose";
 
