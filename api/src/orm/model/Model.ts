@@ -34,7 +34,12 @@ import GraphQLNumber from "../GraphQLNumber";
 import { ObjectId } from "mongodb";
 import GraphQLDate from "../GraphQLDate";
 import GraphQLBuffer from "../GraphQLBuffer";
-import { isObjectLiteral, isGraphQLFieldConfig } from "../util/index";
+import {
+  isObjectLiteral,
+  isGraphQLFieldConfig,
+  isSchemaTypeOpts,
+  convertSchemaTypeOptsToGraphQLConfig
+} from "../util";
 // import GraphQLMap from "../GraphQLMap";
 
 interface DBRef {
@@ -49,6 +54,7 @@ type BuildType<T> = GraphQLFieldConfig<T, Context> & {
 };
 const buildGraphQLFieldConfig = <T, Context>(
   [name, value]: [string, any],
+  parent: string,
   field: BuildType<T> = {} as BuildType<T>
 ): GraphQLFieldConfig<T, Context> => {
   /**
@@ -103,8 +109,8 @@ const buildGraphQLFieldConfig = <T, Context>(
   }
 
   /**
-   *    possible encountered values
-   *    - Array wraps
+   *    = possible encountered values
+   *    - array wraps
    */
   if (isArray(value))
     if (value.length === 1) {
@@ -117,37 +123,67 @@ const buildGraphQLFieldConfig = <T, Context>(
 
       let _field = { ...field, type: false, base } as BuildType<T>;
 
-      return buildGraphQLFieldConfig<T, Context>([name, value[0]], _field);
+      return buildGraphQLFieldConfig<T, Context>(
+        [name, value[0]],
+        parent,
+        _field
+      );
     } else throw new Error("array elements must be one type");
 
   /**
-   *
-   *  base type
-   *
+   *    = scalar types
    */
   let scalar = isScalarType(value);
   if (scalar) finalize(scalar);
 
   /**
    *    = Known object literal type
-   *        - GraphQLFieldConfig<T, Context>
-   *        - SchemaTypeOpts<T>
+   *      - GraphQLFieldConfig<T, Context>
+   *      - SchemaTypeOpts<T>
    */
   if (isObjectLiteral(value)) {
     let results = isGraphQLFieldConfig<T, Context>(value);
     if (!isArray(results)) return results;
 
-    results = isSchemaTypeOpts<T>(value);
-    if (!isArray(results)) return results;
-
+    if (!isArray(isSchemaTypeOpts<T>(value))) {
+      let results = convertSchemaTypeOptsToGraphQLConfig<T, Context>(value);
+      if (!isArray(results)) return results;
+      throw new Error(`field ${name} has an invalid SchemaTypeOpts`);
+    }
     /**
      *    = Nested simple object
      *
      */
-    finalize(new GraphQLObjectType({}));
+    finalize(
+      new GraphQLObjectType({
+        name: `${parent}.${name}`,
+        fields: buildGraphQLFieldConfigMap(value, `${parent}.${name}`)
+      })
+    );
   }
 
-  throw new TypeError(`unknown type ${typeof value}`);
+  throw new TypeError(
+    `unknown type ${typeof value} named ${value.name ? value.name : "NO NAME"}`
+  );
+};
+
+const buildGraphQLFieldConfigMap = <T, Context>(
+  config: ModelConfig<T>,
+  parent: string
+): GraphQLFieldConfigMap<T, Context> => {
+  const fields = {} as GraphQLFieldConfigMap<T, Context>;
+
+  Object.entries(config).map(([key, value]) => {
+    const fieldConfig = buildGraphQLFieldConfig([key, value], parent);
+
+    // const fieldConfig = {
+    //   resolve: (obj, args, ctx, info) => {}
+    // } as GraphQLFieldConfig<T, Context>;
+
+    fields[key] = fieldConfig;
+  });
+
+  return fields;
 };
 
 class Model<T> extends GraphQLObjectType {
@@ -175,17 +211,7 @@ class Model<T> extends GraphQLObjectType {
       schemaOptions.collection
     );
 
-    const fields = {} as GraphQLFieldConfigMap<T, Context>;
-
-    Object.entries(config).map(([key, value]) => {
-      const fieldConfig = buildGraphQLFieldConfig([key, value]);
-
-      // const fieldConfig = {
-      //   resolve: (obj, args, ctx, info) => {}
-      // } as GraphQLFieldConfig<T, Context>;
-
-      fields[key] = fieldConfig;
-    });
+    const fields = buildGraphQLFieldConfigMap(config, _options.name);
 
     const _config: GraphQLObjectTypeConfig<T, Context> = {
       name: _options.name,

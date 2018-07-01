@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
 
-let schema = new mongoose.Schema({});
+let schema = [];
 
-console.log(schema instanceof mongoose.Schema);
+console.log(schema.length);
