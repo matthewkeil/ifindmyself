@@ -1,7 +1,7 @@
 import { GraphQLSchema, GraphQLObjectType } from "graphql";
 import { SourceModule } from ".";
 
-const modules = [import("./Need"), import("./Dimension")] as SourceModule[];
+const modules = [] as SourceModule[];
 
 let query = {} as SourceModule.Query;
 let mutation = {} as SourceModule.Mutation;
