@@ -1,4 +1,4 @@
-import { User } from "../graph/User";
+// import { User } from "../graph/User";
 
 const handleError = (err: ApiError) => {
   console.error(err);
@@ -15,14 +15,14 @@ const handleError = (err: ApiError) => {
 interface ErrorConfig {
   msg?: string;
   err?: Error;
-  user?: User;
+  // user?: User;
 }
 export class ApiError extends Error {
-  public user?: User;
+  // public user?: User;
   public err?: Error;
-  constructor(msg: string = "", { err, user }: ErrorConfig = {}) {
+  constructor(msg: string = "", { err }: ErrorConfig = {}) {
     super(msg || "Server Error - no additional information");
-    this.user = user;
+    // this.user = user;
     this.err = err;
     handleError(this);
   }

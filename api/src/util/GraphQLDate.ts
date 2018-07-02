@@ -1,7 +1,7 @@
 import { GraphQLScalarType, Kind } from "graphql";
 import { inspect, isString, isArray } from "util";
 
-const GraphQLDate = new GraphQLScalarType({
+export const GraphQLDate = new GraphQLScalarType({
   name: "Date",
   description: "date object that serializes to JSON",
   parseValue: (value: any) => {

@@ -1,5 +1,3 @@
-export { Context } from "./graph";
-
 import { buildHttp, buildHttps } from "./www";
 import { ServerError } from "./util";
 

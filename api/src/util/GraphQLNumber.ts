@@ -49,7 +49,7 @@ function coerceNumber(value: any): number {
   return value;
 }
 
-const GraphQLNumber = new GraphQLScalarType({
+export const GraphQLNumber = new GraphQLScalarType({
   name: "Number",
   description: "decimal agnostic numeric type",
   parseValue: coerceNumber,

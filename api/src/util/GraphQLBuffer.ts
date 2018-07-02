@@ -1,7 +1,7 @@
 import { GraphQLScalarType, Kind } from "graphql";
-import { inspect, isString, isArray, isBuffer } from "util";
+import { isString, isBuffer } from "util";
 
-const GraphQLBuffer = new GraphQLScalarType({
+export const GraphQLBuffer = new GraphQLScalarType({
   name: "Buffer",
   description: `byte sequence that serializes using base64 encoding.
   correlates to mongo datatype #5-binData`,

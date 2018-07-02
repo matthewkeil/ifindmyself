@@ -1,15 +1,19 @@
 import { generate } from "shortid";
 import { SchemaDefinition } from "mongoose";
 
-import { REF, dbRef, Context } from "./";
 import {
   GraphQLFieldMap,
   GraphQLObjectType,
   GraphQLID,
   GraphQLString,
   GraphQLNonNull,
-  isNonNullType
+  isNonNullType,
+  GraphQLFieldConfig
 } from "graphql";
+
+import { GraphQLDate } from "../util";
+import { REF, dbRef, Context } from "./";
+import { UserNode } from "./User";
 
 export const baseDefinition: SchemaDefinition = {
   id: { type: String, default: generate(), required: true, unique: true },
@@ -27,7 +31,7 @@ export const ActionField = new GraphQLObjectType({
   })
 });
 
-export const baseFields: GraphQLFieldMap<any, Context> = {
+export const baseFields = {
   _id: { type: new GraphQLNonNull(GraphQLID) },
   id: { type: new GraphQLNonNull(GraphQLString) },
   created: { type: new GraphQLNonNull(ActionField) }

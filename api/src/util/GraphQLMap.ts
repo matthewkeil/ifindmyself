@@ -67,7 +67,7 @@ function parseMap(value: any): Map<SerializableTypes, SerializableTypes> {
   return new Map(Object.entries(JSON.parse(value)));
 }
 
-const GraphQLMap = new GraphQLScalarType({
+export const GraphQLMap = new GraphQLScalarType({
   name: "Map",
   description: "serializable representation of the Javascript Map type",
   parseValue: parseMap,

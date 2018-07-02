@@ -51,16 +51,3 @@ UserSchema.virtual("token")
   });
 
 export const UserModel = mongoose.model(REF.USER, UserSchema);
-
-// @Collection("users")
-// export default class User {
-//   static fromToken = async (token: string): Promise<User | undefined> => {
-//     try {
-//       const { id } = await Token.verify(token);
-//       const user = { id }; //User.findBy({ id });
-//       return user;
-//     } catch (err) {
-//       new ApiError("Error deserializing token", { err });
-//     }
-//   };
-// }

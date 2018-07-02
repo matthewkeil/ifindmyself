@@ -24,11 +24,8 @@ import {
   SSL
 } from "./helpers";
 
-import { schema, Context } from "../graph";
+import { schema, Context } from "../graphql";
 import { ServerError } from "../util";
-import User from "../graph/User/model";
-import { isArray } from "util";
-// import { User } from "../graph/User";
 
 /**
  *
@@ -143,11 +140,11 @@ export default async () => {
     (req, res, next) => {
       res.setHeader("Content-Type", "application/json; charset=utf-8");
       if (req.headers.authorization) {
-        const token = isArray(req.headers.authorization)
-          ? req.headers.authorization[0].split(" ")[1]
-          : req.headers.authorization.split(" ")[1];
+        // const token = isArray(req.headers.authorization)
+        //   ? req.headers.authorization[0].split(" ")[1]
+        //   : req.headers.authorization.split(" ")[1];
 
-        let user = User.fromToken(token);
+        let user = undefined; //User.fromToken(token);
         if (user) context.user = user;
       }
       next();
