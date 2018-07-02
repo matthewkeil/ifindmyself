@@ -1,7 +1,7 @@
-import * as Jwt from "jsonwebtoken";
+import { sign as _sign, verify as _verify } from "jsonwebtoken";
 import { promisify } from "util";
-const sign = promisify(Jwt.sign);
-const verify = promisify(Jwt.verify);
+const sign = promisify(_sign);
+const verify = promisify(_verify);
 import { ServerError } from "../../util";
 
 interface Payload {

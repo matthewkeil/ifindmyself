@@ -27,13 +27,6 @@
 //           token: await Token.sign({ id: user.id })
 //         };
 //       } catch (err) {ServerError("error creating user props", {err})
-//       // let results = await neo.run(`
-//       //   CREATE (user: User ${toPropString(user)})
-//       //   CREATE CONSTRAINT ON (user:User) ASSERT user.id IS UNIQUE
-//       //   CREATE CONSTRAINT ON (user:User) ASSERT user.email IS UNIQUE
-//       //   RETURN user
-//       // `);
-//       // if (results.records[0])
 //     }
 //   }
 // };
