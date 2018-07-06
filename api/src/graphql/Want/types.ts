@@ -16,8 +16,14 @@ export const wantNodeConfig: GraphQLObjectTypeConfig<Want, Context> = {
   fields: () => ({
     ...baseFields,
     name: { type: new GraphQLNonNull(GraphQLString) },
-    dimensions: { type: new GraphQLList(DimensionNode) },
-    needs: { type: new GraphQLList(NeedNode) }
+    dimensions: {
+      type: new GraphQLList(DimensionNode),
+      resolve: obj => obj.populate("dimensions").execPopulate()
+    },
+    needs: {
+      type: new GraphQLList(NeedNode),
+      resolve: obj => obj.populate("needs").execPopulate()
+    }
   })
 };
 

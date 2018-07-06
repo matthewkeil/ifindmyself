@@ -1,4 +1,4 @@
 export const isObjectLiteral = (obj: any) =>
-  obj.__proto__ === ({} as any).__proto__;
+  Object.getPrototypeOf(obj) === Object.getPrototypeOf({});
 
 export default isObjectLiteral;

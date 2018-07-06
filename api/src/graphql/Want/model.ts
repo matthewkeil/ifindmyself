@@ -1,5 +1,5 @@
 import * as mongoose from "mongoose";
-import { DBRef, dbRef, REF, baseDefinition, BaseObject } from "../";
+import { DBRef, dbRef, baseDefinition, BaseObject } from "../";
 
 export interface Want extends BaseObject {
   name: string;
@@ -10,10 +10,10 @@ export interface Want extends BaseObject {
 export const WantSchemaDefinition: mongoose.SchemaDefinition = {
   ...baseDefinition,
   name: { type: String, required: true },
-  dimensions: [dbRef(REF.DIMENSION)],
-  needs: [dbRef(REF.NEED)]
+  dimensions: [dbRef("Dimension")],
+  needs: [dbRef("Need")]
 };
 
 export const WantSchema = new mongoose.Schema(WantSchemaDefinition);
 
-export const WantModel = mongoose.model(REF.WANT, WantSchema);
+export const WantModel = mongoose.model<Want>("Want", WantSchema);

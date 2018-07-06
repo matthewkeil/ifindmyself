@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-<<<<<<< HEAD
     "rootDir": ".",
-=======
-    "rootDirs": ["./api/src", "./client/src"],
->>>>>>> mongo-orm
     "moduleResolution": "node",
     "target": "es2017",
     "noImplicitReturns": true,

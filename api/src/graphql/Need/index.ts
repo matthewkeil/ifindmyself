@@ -8,3 +8,7 @@ export * from "./model";
 //   query,
 //   mutation
 // };
+import { NeedModel } from "./model";
+export default {
+  model: NeedModel
+};

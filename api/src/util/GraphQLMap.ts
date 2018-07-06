@@ -15,7 +15,7 @@ function serializeMap(value: any): string {
     throw new TypeError(`Maps cannot be an array`);
   }
 
-  if (value._proto__ !== (Map as any).__proto__) {
+  if (Object.getPrototypeOf(value) !== Object.getPrototypeOf(Map)) {
     throw new TypeError(`maps must be a javascript Map`);
   }
 

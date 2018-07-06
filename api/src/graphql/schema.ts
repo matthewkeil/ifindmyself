@@ -1,22 +1,69 @@
-import { GraphQLSchema, GraphQLObjectType } from "graphql";
-import { SourceModule, REF } from ".";
+import {
+  GraphQLSchema,
+  GraphQLObjectType,
+  GraphQLOutputType,
+  GraphQLSchemaConfig
+} from "graphql";
+import { SourceModule, FieldsMap, Context } from ".";
 
-let query = {} as SourceModule.Query;
-let mutation = {} as SourceModule.Mutation;
+import User from "./User";
+import Need from "./Need";
+import Want from "./Want";
+import Dimension from "./Dimension";
+import { Model, Document } from "mongoose";
+import { buildBaseQuery, buildBaseMutation } from "./BaseObject";
 
-Object.entries(REF).forEach(async ([_, VALUE]) => {
-  const module = await import(`./${VALUE}`);
-  if (module.query) query = { ...query, ...module.query };
-  if (module.mutation) mutation = { ...mutation, ...module.mutation };
-});
+export interface ReferenceModule<T extends Document> {
+  model: Model<T>;
+  node: GraphQLOutputType;
+  query: FieldsMap<T>;
+  mutation: FieldsMap<T>;
+  types: GraphQLSchemaConfig["types"];
+}
+type ReferenceModules = { [key in Ref]: ReferenceModule<any> };
 
-export default new GraphQLSchema({
+export const referencedModules = {
+  User,
+  Need,
+  Want,
+  Dimension
+};
+
+export type Ref = keyof typeof referencedModules;
+export type RefMap = { [key in Ref]: typeof referencedModules[key]["model"] };
+
+// const sourceModules = {
+//   // modules without a model to tie to context
+// };
+
+let refMap = {} as Context;
+let rootQuery = {} as SourceModule.Query<any>;
+let rootMutation = {} as SourceModule.Mutation<any>;
+let rootTypes = [] as SourceModule.Types;
+
+Object.entries({ ...(referencedModules as ReferenceModules) }).forEach(
+  ([ref, { model, query, mutation, types, node }]) => {
+    if (model) {
+      refMap = { ...refMap, [ref]: model };
+      rootQuery = { ...rootQuery, ...buildBaseQuery({ model, node }) };
+      rootMutation = { ...rootMutation, ...buildBaseMutation({ model, node }) };
+    }
+    if (query) rootQuery = { ...rootQuery, ...query };
+    if (mutation) rootMutation = { ...rootMutation, ...mutation };
+    if (types) rootTypes!.push(...types);
+  }
+);
+
+export { refMap as context };
+
+export const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: "Query",
-    fields: () => ({ ...query })
+    fields: () => ({ ...rootQuery })
   }),
   mutation: new GraphQLObjectType({
     name: "Mutation",
-    fields: () => ({ ...mutation })
-  })
+    fields: () => ({ ...rootMutation })
+  }),
+  types: rootTypes
 });

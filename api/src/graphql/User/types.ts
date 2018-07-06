@@ -22,9 +22,18 @@ export const userNodeConfig: GraphQLObjectTypeConfig<User, Context> = {
     password: { type: new GraphQLNonNull(GraphQLString) },
     passwords: { type: new GraphQLNonNull(new GraphQLList(GraphQLString)) },
     name: { type: new GraphQLNonNull(GraphQLString) },
-    dimensions: { type: new GraphQLList(DimensionNode) },
-    wants: { type: new GraphQLList(WantNode) },
-    needs: { type: new GraphQLList(NeedNode) }
+    dimensions: {
+      type: new GraphQLList(DimensionNode),
+      resolve: obj => obj.populate("dimensions").execPopulate()
+    },
+    wants: {
+      type: new GraphQLList(WantNode),
+      resolve: obj => obj.populate("wants").execPopulate()
+    },
+    needs: {
+      type: new GraphQLList(NeedNode),
+      resolve: obj => obj.populate("needs").execPopulate()
+    }
   })
 };
 

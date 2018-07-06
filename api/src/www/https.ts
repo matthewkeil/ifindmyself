@@ -24,7 +24,7 @@ import {
   SSL
 } from "./helpers";
 
-import { schema, Context } from "../graphql";
+import { schema, context } from "../graphql";
 import { ServerError } from "../util";
 
 /**
@@ -134,26 +134,23 @@ export default async () => {
   if (PROD) app.use(compression());
   else app.use("/", graphiqlExpress({ endpointURL: "/graphql" }));
 
-  const context: Context = { db };
-  app.use(
-    "/graphql",
-    (req, res, next) => {
-      res.setHeader("Content-Type", "application/json; charset=utf-8");
-      if (req.headers.authorization) {
-        // const token = isArray(req.headers.authorization)
-        //   ? req.headers.authorization[0].split(" ")[1]
-        //   : req.headers.authorization.split(" ")[1];
+  app.use("/graphql", (req, res, next) => {
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
 
-        let user = undefined; //User.fromToken(token);
-        if (user) context.user = user;
-      }
-      next();
-    },
+    if (req.headers.authorization) {
+      // const token = isArray(req.headers.authorization)
+      //   ? req.headers.authorization[0].split(" ")[1]
+      //   : req.headers.authorization.split(" ")[1];
+
+      let user = undefined; //User.fromToken(token);
+      if (user) context.user = user;
+    }
+
     graphqlExpress({
       schema,
       context
-    })
-  );
+    })(req, res, next);
+  });
 
   /**
    *

@@ -1,5 +1,5 @@
 import * as mongoose from "mongoose";
-import { baseDefinition, BaseObject, REF, dbRef, DBRef } from "../";
+import { baseDefinition, BaseObject, dbRef, DBRef } from "../";
 
 export interface User extends BaseObject {
   emails: string[];
@@ -14,8 +14,8 @@ export const UserSchemaDefinition: mongoose.SchemaDefinition = {
   emails: { type: [String], required: true },
   passwords: { type: [String], required: true },
   tokens: { type: [String], required: true },
-  needs: [dbRef(REF.NEED)],
-  wants: [dbRef(REF.WANT)]
+  needs: [dbRef("Need")],
+  wants: [dbRef("Want")]
 };
 
 export const UserSchema = new mongoose.Schema(UserSchemaDefinition);
@@ -50,4 +50,6 @@ UserSchema.virtual("token")
     this.tokens.unshift(value);
   });
 
-export const UserModel = mongoose.model(REF.USER, UserSchema);
+export const UserModel = mongoose.model<User>("User", UserSchema);
+
+console.log(UserSchema);

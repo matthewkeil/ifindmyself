@@ -1,69 +1,51 @@
 /**
  *
- * Define graphQL context
+ * dbRef, DBRef, Ref
  *
  */
-import { User } from "./User";
 import * as mongoose from "mongoose";
-export interface Context {
-  user?: User;
-  db: mongoose.Connection;
-  // neo: Neo4J.Session;
-}
-
-/**
- *
- * REF, Ref, DBRef, dbRef
- *
- */
-import { ObjectId, DBRef } from "mongodb";
-export { DBRef };
-export enum REF {
-  WANT = "Want",
-  NEED = "Need",
-  DIMENSION = "Dimension",
-  USER = "User"
-}
-export type Ref = typeof REF[keyof typeof REF];
+import { DBRef } from "mongodb";
+import { Ref, RefMap } from "./schema";
 export const dbRef = (ref: Ref) => ({
   type: mongoose.Schema.Types.ObjectId,
   ref
 });
+export { DBRef, Ref };
+
 /**
  *
- * BaseObject, baseDefinition and baseFields
+ * GraphQL Schema, context and Context
  *
  */
-export * from "./BaseObject";
-export interface BaseObject {
-  _id: ObjectId;
-  id: string; //shortid for URLs
-  create: {
-    by: DBRef;
-    date: Date;
-  };
-}
+import { User } from "./User";
+export type Context = RefMap & {
+  user?: User;
+};
+export { schema, context } from "./schema";
 
 /**
  *
  * SourceModules definition
  *
  */
-import { GraphQLObjectTypeConfig, GraphQLSchemaConfig } from "graphql";
-export interface SourceModule {
-  query?: GraphQLObjectTypeConfig<any, Context>["fields"];
-  mutation?: GraphQLObjectTypeConfig<any, Context>["fields"];
-  types?: GraphQLSchemaConfig["types"];
-}
+import { GraphQLObjectTypeConfig } from "graphql";
+import { ReferenceModule } from "./schema";
+import { Document } from "mongoose";
+export type SourceModule<T extends Document> = Partial<ReferenceModule<T>>;
 export namespace SourceModule {
-  export type Query = SourceModule["query"];
-  export type Mutation = SourceModule["mutation"];
-  export type Types = SourceModule["types"];
+  export type Model<T extends Document> = ReferenceModule<T>["model"];
+  export type Query<T extends Document> = ReferenceModule<T>["query"];
+  export type Mutation<T extends Document> = ReferenceModule<T>["mutation"];
+  export type Types = ReferenceModule<any>["types"];
 }
+export type FieldsMap<T extends Document> = GraphQLObjectTypeConfig<
+  T,
+  Context
+>["fields"];
 
 /**
  *
- * GraphQL Schema
+ * BaseObject, baseDefinition and baseFields
  *
  */
-export { default as schema } from "./schema";
+export * from "./BaseObject";

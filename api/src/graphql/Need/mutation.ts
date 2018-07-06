@@ -6,27 +6,21 @@
 //   GraphQLID
 // } from "graphql";
 
-// import { Context } from "../";
-// import { Need } from "./types";
+// import { Context, FieldsMap } from "../";
+// import { Need } from "./model";
+// import { NeedNode } from "./types";
 
 // const CreateNeedInput = new GraphQLInputObjectType({
 //   name: "CreateNeedInput",
 //   fields: {}
 // });
-// const needMutation: GraphQLObjectTypeConfig<Need, Context>["fields"] = {
+
+// const needMutation: FieldsMap<Need> = {
 //   createNeed: {
-//     type: Need,
+//     type: NeedNode,
 //     args: {},
 //     resolve: (_, args, {}) => {
-//       const need = `(need: Need {})`;
-//       const relationship = ``;
 
-//       // const dimension = `(dimension:Dimension {${(...args.input.dimension)}})`;
-//       // return neo.run(`
-//       //   CREATE ${need} -[:DIMENSIONED]-> ${dimension}
-//       //   RETURN need, dimension
-//       // `)
-//     }
 //   }
 // };
 

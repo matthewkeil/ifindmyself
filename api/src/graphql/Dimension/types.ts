@@ -19,8 +19,16 @@ export const dimensionNodeConfig: GraphQLObjectTypeConfig<
   fields: () => ({
     ...baseFields,
     name: { type: new GraphQLNonNull(GraphQLString) },
-    wants: { type: new GraphQLList(WantNode) },
-    needs: { type: new GraphQLList(NeedNode) }
+    primary: { type: new GraphQLNonNull(GraphQLString) },
+    secondary: { type: new GraphQLNonNull(GraphQLString) },
+    wants: {
+      type: new GraphQLList(WantNode),
+      resolve: obj => obj.populate("wants").execPopulate()
+    },
+    needs: {
+      type: new GraphQLList(NeedNode),
+      resolve: obj => obj.populate("needs").execPopulate()
+    }
   })
 };
 
