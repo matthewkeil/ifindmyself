@@ -69,11 +69,20 @@ type Validator<T extends string | number | boolean | {}> = (
 ) => boolean;
 type TreeValidator<T> = { [K in keyof T]: Validator<T[K]> };
 
+// type SerializableKey = string;
+// type SerializableObject = { [key in SerializableKey]: SerializableValue };
+// type SerializableValue = string | number | boolean | SerializableObject;
+// type DocType = Record<SerializableKey, SerializableValue>;
+
+const readMongooseTree = <T extends object>(model: Model<Document<T>>) => {};
+
 export default <T extends object>(model: Model<Document<T>>) => {
   const tree = (model.schema as any).tree as MongooseTree<T>;
 
   (Object.entries(tree) as [keyof T, MongooseBranchType][]).forEach(
-    ([fieldName, branch]) => ({ [fieldName]: branch })
+    ([fieldName, branch]) => ({
+      [fieldName]: branch
+    })
   );
 
   const validateFilterQuery = <T>(value: any) => {

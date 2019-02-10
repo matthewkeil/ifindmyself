@@ -48,13 +48,13 @@ interface DBRef {
   $db?: string;
 }
 
-export type JavascriptTypeConstructor<
-  T extends Number | String | Boolean | Date | Buffer | Map<any, any>
-> = T;
+// export type JavascriptTypeConstructor<
+//   T extends Number | String | Boolean | Date | Buffer | Map<any, any>
+// > = T;
 
-export type MongooseMapToInterface<T extends JavascriptTypeConstructor<any>> = {
-  [P in keyof T]?: T[P]
-};
+// export type MongooseMapToInterface<T extends JavascriptTypeConstructor<any>> = {
+//   [P in keyof T]?: T[P]
+// };
 
 // type GraphQL<T extends> = T extends String ? string :
 //   T extends Number ? number :
